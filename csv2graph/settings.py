@@ -1,3 +1,5 @@
+from csv2graph.namespace import kompetenz, lernniveaustufe
+
 #
 # Headers in CSV file "LO-Matrix_Tischvorlage_cluster_1.xlsx - Matrix_de_en_gesamt.csv"
 #
@@ -32,6 +34,22 @@ TOPIC_HEADER_LANGUAGE_ASSOCIATION = {
 LO_HEADER_LANGUAGE_ASSOCIATION = {
     "de": HEADER_LO_DE,
     "en": HEADER_LO_EN,
+}
+
+HEADER_COMPETENCY_ASSOCIATION = {
+    HEADER_SK_LEVEL: kompetenz.SK,
+    HEADER_MK_LEVEL: kompetenz.MK,
+    HEADER_SEK_LEVEL: kompetenz.SeK,
+    HEADER_SOK_LEVEL: kompetenz.SoK,
+}
+
+LEARNING_LEVELS_ASSOCIATION = {
+    "1": lernniveaustufe.LNS1,
+    "2": lernniveaustufe.LNS2,
+    "3": lernniveaustufe.LNS3,
+    "4": lernniveaustufe.LNS4,
+    "5": lernniveaustufe.LNS5,
+    "6": lernniveaustufe.LNS6,
 }
 
 #
