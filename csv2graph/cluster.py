@@ -6,7 +6,7 @@ from rdflib.term import Node, URIRef, Literal
 from csv2graph.settings import PREFIX_CLUSTER
 
 
-def add_cluster(g: Graph, cluster_id: str, names_dict: Dict) -> Node:
+def add_cluster(g: Graph, cluster_id: str, names_dict: Dict) -> Node | None:
     if not cluster_id:
         return
 
