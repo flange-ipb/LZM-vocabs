@@ -23,27 +23,22 @@ def test_add_learning_objective():
         @prefix o: <http://lzfdm.nfdi.de/ontologie/> .
         @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-        lz:12345 o:fördertKompetenzstufe _:b1, _:b2, _:b3 ;
+        lz:12345 o:fördertKompetenzstufe [
+                a o:Kompetenzstufe ;
+                o:weistKompetenzZu komp:SoK ;
+                o:weistLernniveaustufeZu lns:1
+            ],
+            [
+                a o:Kompetenzstufe ;
+                o:weistKompetenzZu komp:SeK ;
+                o:weistLernniveaustufeZu lns:2
+            ],
+            [
+                a o:Kompetenzstufe ;
+                o:weistKompetenzZu komp:MK ;
+                o:weistLernniveaustufeZu lns:4
+            ] ;
             skos:definition "Definition in Deutsch"@de, "Definition in English"@en .
-
-        komp:MK o:wirdZuKompetenzstufeZugewiesen _:b1 .
-        komp:SeK o:wirdZuKompetenzstufeZugewiesen _:b2 .
-        komp:SoK o:wirdZuKompetenzstufeZugewiesen _:b3 .
-        lns:1 o:wirdZuKompetenzstufeZugewiesen2 _:b3 .
-        lns:2 o:wirdZuKompetenzstufeZugewiesen2 _:b2 .
-        lns:4 o:wirdZuKompetenzstufeZugewiesen2 _:b1 .
-
-        _:b1 a o:Kompetenzstufe ;
-            o:weistKompetenzZu komp:MK ;
-            o:weistLernniveaustufeZu lns:4 .
-
-        _:b2 a o:Kompetenzstufe ;
-            o:weistKompetenzZu komp:SeK ;
-            o:weistLernniveaustufeZu lns:2 .
-
-        _:b3 a o:Kompetenzstufe ;
-            o:weistKompetenzZu komp:SoK ;
-            o:weistLernniveaustufeZu lns:1 .
     """)
 
     assert same_graphs(g, expected)

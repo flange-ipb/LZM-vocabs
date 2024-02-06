@@ -19,10 +19,10 @@ def _add_competency_level_to_learning_objective(g: Graph, lo_node: Node, compete
     g.add((cl_node, RDF.type, fdmontology.Kompetenzstufe))
 
     g.add((cl_node, fdmontology.weistKompetenzZu, competency))
-    g.add((competency, fdmontology.wirdZuKompetenzstufeZugewiesen, cl_node))
+    #g.add((competency, fdmontology.wirdZuKompetenzstufeZugewiesen, cl_node))
 
     g.add((cl_node, fdmontology.weistLernniveaustufeZu, learning_level))
-    g.add((learning_level, fdmontology.wirdZuKompetenzstufeZugewiesen2, cl_node))
+    #g.add((learning_level, fdmontology.wirdZuKompetenzstufeZugewiesen2, cl_node))
 
 
 def _add_competency_levels_to_learning_objective(g: Graph, lo_node: Node, row: Dict):
