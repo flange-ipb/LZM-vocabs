@@ -5,7 +5,7 @@ from rdflib.term import Node, Literal, BNode
 
 from csv2graph.namespace import fdmontology
 from csv2graph.settings import PREFIX_LO, HEADER_LO_ID, LO_HEADER_LANGUAGE_ASSOCIATION, HEADER_COMPETENCY_ASSOCIATION, \
-    LEARNING_LEVELS_ASSOCIATION
+    LEARNING_LEVELS_ASSOCIATION, HEADER_QUALIFICATION_LEVELS_ASSOCIATION
 
 
 def _add_definitions_to_learning_objective(g: Graph, lo_node: Node, row: Dict):
@@ -27,10 +27,24 @@ def _add_competency_level_to_learning_objective(g: Graph, lo_node: Node, compete
 
 def _add_competency_levels_to_learning_objective(g: Graph, lo_node: Node, row: Dict):
     for header, competency in HEADER_COMPETENCY_ASSOCIATION.items():
-        learning_level = row[header]
-        if learning_level:
+        if learning_level := row[header]:
             _add_competency_level_to_learning_objective(g, lo_node, competency,
                                                         LEARNING_LEVELS_ASSOCIATION[learning_level])
+
+
+def _add_qualification_level_to_learning_objective(g: Graph, lo_node: Node, level_node: Node):
+    g.add((lo_node, fdmontology.istAbgestimmtAufZielgruppe, level_node))
+    g.add((level_node, fdmontology.istZielgruppeVonLernziel, lo_node))
+
+
+def _add_qualification_levels_to_learning_objective(g: Graph, lo_node: Node, row: Dict):
+    for header, level in HEADER_QUALIFICATION_LEVELS_ASSOCIATION.items():
+        if has_level := row[header] == "X":
+            _add_qualification_level_to_learning_objective(g, lo_node, level)
+        elif not has_level:
+            continue
+        else:
+            raise Exception(f"Wrong character in column {header}: '{has_level}'")
 
 
 def add_learning_objective(g: Graph, row: Dict):
@@ -38,3 +52,4 @@ def add_learning_objective(g: Graph, row: Dict):
 
     _add_definitions_to_learning_objective(g, lo_node, row)
     _add_competency_levels_to_learning_objective(g, lo_node, row)
+    _add_qualification_levels_to_learning_objective(g, lo_node, row)

@@ -13,6 +13,10 @@ def test_add_learning_objective():
         settings.HEADER_MK_LEVEL: "4",
         settings.HEADER_SEK_LEVEL: "2",
         settings.HEADER_SOK_LEVEL: "1",
+        settings.HEADER_BA: "",
+        settings.HEADER_MA: "",
+        settings.HEADER_PHD: "X",
+        settings.HEADER_DATA: "X",
     }
     add_learning_objective(g, row)
 
@@ -22,6 +26,7 @@ def test_add_learning_objective():
         @prefix lz: <http://lzfdm.nfdi.de/vocab/lernziel#> .
         @prefix o: <http://lzfdm.nfdi.de/ontologie/> .
         @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+        @prefix zg: <http://lzfdm.nfdi.de/vocab/qualifikationsstufe#> .
 
         lz:12345 o:fördertKompetenzstufe [
                 a o:Kompetenzstufe ;
@@ -38,7 +43,11 @@ def test_add_learning_objective():
                 o:weistKompetenzZu komp:MK ;
                 o:weistLernniveaustufeZu lns:4
             ] ;
+            o:istAbgestimmtAufZielgruppe zg:Data, zg:PhD ;
             skos:definition "Definition in Deutsch"@de, "Definition in English"@en .
+
+        zg:Data o:istZielgruppeVonLernziel lz:12345 .
+        zg:PhD o:istZielgruppeVonLernziel lz:12345 .
     """)
 
     assert same_graphs(g, expected)

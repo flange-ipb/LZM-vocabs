@@ -3,7 +3,7 @@ import sys
 from rdflib import Graph
 from rdflib.compare import isomorphic
 
-from csv2graph.namespace import fdmontology, kompetenz, lernniveaustufe
+from csv2graph.namespace import fdmontology, kompetenz, lernniveaustufe, zielgruppe
 from csv2graph.settings import PREFIX_LO, PREFIX_CLUSTER, PREFIX_TOPIC
 
 
@@ -23,6 +23,7 @@ _NAMESPACE_PREFIXES = {
     "o": fdmontology.NS,
     "komp": kompetenz.NS,
     "lns": lernniveaustufe.NS,
+    "zg": zielgruppe.NS,
     "lz": PREFIX_LO,
     "tc": PREFIX_CLUSTER,
     "thema": PREFIX_TOPIC,
