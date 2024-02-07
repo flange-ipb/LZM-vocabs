@@ -1,6 +1,7 @@
-from csv2graph.learning_objective import add_learning_objective
 from csv2graph import settings as s
-from test.util import graph, same_graphs
+from csv2graph.learning_objective import add_learning_objective
+from csv2graph.util import graph
+from test.util import same_graphs
 
 
 def test_add_learning_objective():

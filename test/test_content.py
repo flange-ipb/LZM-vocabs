@@ -2,7 +2,8 @@ import pytest
 
 from csv2graph.content import add_content, add_content_to_topic
 from csv2graph.topic import add_topic
-from test.util import graph, same_graphs
+from csv2graph.util import graph
+from test.util import same_graphs
 
 
 def test_add_content():

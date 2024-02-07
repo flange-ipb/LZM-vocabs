@@ -1,7 +1,8 @@
 import pytest
 
 from csv2graph.cluster import add_cluster
-from test.util import graph, same_graphs
+from csv2graph.util import graph
+from test.util import same_graphs
 
 
 def test_add_same_cluster_twice():
