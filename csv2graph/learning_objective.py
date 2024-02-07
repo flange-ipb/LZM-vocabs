@@ -8,19 +8,19 @@ from csv2graph.namespace import fdmontology
 from csv2graph.settings import (
     PREFIX_LO,
     HEADER_LO_ID,
-    LO_HEADER_LANGUAGE_ASSOCIATION,
-    HEADER_COMPETENCY_ASSOCIATION,
+    LANGUAGE_TO_LO_HEADER_ASSOCIATION,
+    HEADER_TO_COMPETENCY_ASSOCIATION,
     LEARNING_LEVELS_ASSOCIATION,
-    HEADER_QUALIFICATION_LEVELS_ASSOCIATION,
+    HEADER_TO_QUALIFICATION_LEVELS_ASSOCIATION,
     HEADER_TOPIC_ID_IN_CLUSTER,
     HEADER_CLUSTER_ID,
-    TOPIC_HEADER_LANGUAGE_ASSOCIATION,
-    CLUSTER_HEADER_LANGUAGE_ASSOCIATION,
+    LANGUAGE_TO_TOPIC_HEADER_ASSOCIATION,
+    LANGUAGE_TO_CLUSTER_HEADER_ASSOCIATION,
 )
 
 
 def _add_definitions(g: Graph, lo_node: Node, row: Dict):
-    for lang, header in LO_HEADER_LANGUAGE_ASSOCIATION.items():
+    for lang, header in LANGUAGE_TO_LO_HEADER_ASSOCIATION.items():
         g.add((lo_node, SKOS.definition, Literal(row[header], lang=lang)))
 
 
@@ -37,7 +37,7 @@ def _add_competency_level(g: Graph, lo_node: Node, competency: Node, learning_le
 
 
 def _add_competency_levels(g: Graph, lo_node: Node, row: Dict):
-    for header, competency in HEADER_COMPETENCY_ASSOCIATION.items():
+    for header, competency in HEADER_TO_COMPETENCY_ASSOCIATION.items():
         if learning_level := row[header]:
             _add_competency_level(g, lo_node, competency, LEARNING_LEVELS_ASSOCIATION[learning_level])
 
@@ -48,7 +48,7 @@ def _add_qualification_level(g: Graph, lo_node: Node, level_node: Node):
 
 
 def _add_qualification_levels(g: Graph, lo_node: Node, row: Dict):
-    for header, level in HEADER_QUALIFICATION_LEVELS_ASSOCIATION.items():
+    for header, level in HEADER_TO_QUALIFICATION_LEVELS_ASSOCIATION.items():
         has_level = row[header]
         if has_level == "X":
             _add_qualification_level(g, lo_node, level)
@@ -59,7 +59,7 @@ def _add_qualification_levels(g: Graph, lo_node: Node, row: Dict):
 
 
 def _add_topic(g: Graph, lo_node: Node, row: Dict) -> Node:
-    topic_labels = {lang: row[header] for lang, header in TOPIC_HEADER_LANGUAGE_ASSOCIATION.items()}
+    topic_labels = {lang: row[header] for lang, header in LANGUAGE_TO_TOPIC_HEADER_ASSOCIATION.items()}
     topic_node = topic.add_topic(g, row[HEADER_CLUSTER_ID], row[HEADER_TOPIC_ID_IN_CLUSTER], topic_labels)
 
     g.add((lo_node, fdmontology.adressiertThema, topic_node))
@@ -69,7 +69,7 @@ def _add_topic(g: Graph, lo_node: Node, row: Dict) -> Node:
 
 
 def _add_cluster_to_topic(g: Graph, topic_node: Node, row: Dict):
-    cluster_labels = {lang: row[header] for lang, header in CLUSTER_HEADER_LANGUAGE_ASSOCIATION.items()}
+    cluster_labels = {lang: row[header] for lang, header in LANGUAGE_TO_CLUSTER_HEADER_ASSOCIATION.items()}
     cluster_node = cluster.add_cluster(g, row[HEADER_CLUSTER_ID], cluster_labels)
 
     g.add((cluster_node, fdmontology.enthältThema, topic_node))
