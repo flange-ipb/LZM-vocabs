@@ -22,11 +22,14 @@ HEADER_PHD = "PHD\n"
 HEADER_DATA = "Data"
 
 #
-# Language -> Header associations
+# Language tags (BCP 47)
 #
 LANG_DE = "de"
 LANG_EN = "en"
 
+#
+# Language -> Header associations
+#
 LANGUAGE_TO_CLUSTER_HEADER_ASSOCIATION = {
     LANG_DE: HEADER_CLUSTER_DE,
     LANG_EN: HEADER_CLUSTER_EN,
@@ -72,6 +75,24 @@ HEADER_TO_QUALIFICATION_LEVELS_ASSOCIATION = {
     HEADER_MA: zielgruppe.MA,
     HEADER_PHD: zielgruppe.PHD,
     HEADER_DATA: zielgruppe.DATA,
+}
+
+#
+# Column ids in CSV file "LO-Matrix_Tischvorlage_cluster_1.xlsx - Index.csv"
+# (This file does not have a complete header structure.)
+#
+COL_TOPIC_DE = 1
+COL_CONTENT_DE = 3
+
+#
+# Language -> Column id associations
+#
+LANGUAGE_TOPIC_COL_ID_ASSOCIATION = {
+    LANG_DE: COL_TOPIC_DE,
+}
+
+LANGUAGE_CONTENT_COL_ID_ASSOCIATION = {
+    LANG_DE: COL_CONTENT_DE,
 }
 
 #
