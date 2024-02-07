@@ -8,7 +8,7 @@ from csv2graph.settings import PREFIX_LO, HEADER_LO_ID, LO_HEADER_LANGUAGE_ASSOC
     LEARNING_LEVELS_ASSOCIATION, HEADER_QUALIFICATION_LEVELS_ASSOCIATION
 
 
-def _add_definitions_to_learning_objective(g: Graph, lo_node: Node, row: Dict):
+def _add_definitions(g: Graph, lo_node: Node, row: Dict):
     for lang, header in LO_HEADER_LANGUAGE_ASSOCIATION.items():
         g.add((lo_node, SKOS.definition, Literal(row[header], lang=lang)))
 
@@ -25,7 +25,7 @@ def _add_competency_level_to_learning_objective(g: Graph, lo_node: Node, compete
     #g.add((learning_level, fdmontology.wirdZuKompetenzstufeZugewiesen2, cl_node))
 
 
-def _add_competency_levels_to_learning_objective(g: Graph, lo_node: Node, row: Dict):
+def _add_competency_levels(g: Graph, lo_node: Node, row: Dict):
     for header, competency in HEADER_COMPETENCY_ASSOCIATION.items():
         if learning_level := row[header]:
             _add_competency_level_to_learning_objective(g, lo_node, competency,
@@ -37,7 +37,7 @@ def _add_qualification_level_to_learning_objective(g: Graph, lo_node: Node, leve
     g.add((level_node, fdmontology.istZielgruppeVonLernziel, lo_node))
 
 
-def _add_qualification_levels_to_learning_objective(g: Graph, lo_node: Node, row: Dict):
+def _add_qualification_levels(g: Graph, lo_node: Node, row: Dict):
     for header, level in HEADER_QUALIFICATION_LEVELS_ASSOCIATION.items():
         if has_level := row[header] == "X":
             _add_qualification_level_to_learning_objective(g, lo_node, level)
@@ -50,6 +50,6 @@ def _add_qualification_levels_to_learning_objective(g: Graph, lo_node: Node, row
 def add_learning_objective(g: Graph, row: Dict):
     lo_node = URIRef(PREFIX_LO + row[HEADER_LO_ID])
 
-    _add_definitions_to_learning_objective(g, lo_node, row)
-    _add_competency_levels_to_learning_objective(g, lo_node, row)
-    _add_qualification_levels_to_learning_objective(g, lo_node, row)
+    _add_definitions(g, lo_node, row)
+    _add_competency_levels(g, lo_node, row)
+    _add_qualification_levels(g, lo_node, row)
