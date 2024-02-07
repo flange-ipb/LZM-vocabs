@@ -3,9 +3,19 @@ from typing import Dict
 from rdflib import Graph, URIRef, SKOS, RDF
 from rdflib.term import Node, Literal, BNode
 
+from csv2graph import topic
 from csv2graph.namespace import fdmontology
-from csv2graph.settings import PREFIX_LO, HEADER_LO_ID, LO_HEADER_LANGUAGE_ASSOCIATION, HEADER_COMPETENCY_ASSOCIATION, \
-    LEARNING_LEVELS_ASSOCIATION, HEADER_QUALIFICATION_LEVELS_ASSOCIATION
+from csv2graph.settings import (
+    PREFIX_LO,
+    HEADER_LO_ID,
+    LO_HEADER_LANGUAGE_ASSOCIATION,
+    HEADER_COMPETENCY_ASSOCIATION,
+    LEARNING_LEVELS_ASSOCIATION,
+    HEADER_QUALIFICATION_LEVELS_ASSOCIATION,
+    HEADER_TOPIC_ID_IN_CLUSTER,
+    HEADER_CLUSTER_ID,
+    TOPIC_HEADER_LANGUAGE_ASSOCIATION,
+)
 
 
 def _add_definitions(g: Graph, lo_node: Node, row: Dict):
@@ -47,9 +57,18 @@ def _add_qualification_levels(g: Graph, lo_node: Node, row: Dict):
             raise Exception(f"Wrong character in column {header}: '{has_level}'")
 
 
+def _add_topic(g: Graph, lo_node: Node, row: Dict):
+    topic_names = {lang: row[header] for lang, header in TOPIC_HEADER_LANGUAGE_ASSOCIATION.items()}
+    topic_node = topic.add_topic(g, row[HEADER_CLUSTER_ID], row[HEADER_TOPIC_ID_IN_CLUSTER], topic_names)
+    g.add((lo_node, fdmontology.adressiertThema, topic_node))
+    g.add((topic_node, fdmontology.umfasstLernziel, lo_node))
+
+
 def add_learning_objective(g: Graph, row: Dict):
     lo_node = URIRef(PREFIX_LO + row[HEADER_LO_ID])
+    g.add((lo_node, RDF.type, fdmontology.Lernziel))
 
     _add_definitions(g, lo_node, row)
     _add_competency_levels(g, lo_node, row)
     _add_qualification_levels(g, lo_node, row)
+    _add_topic(g, lo_node, row)
