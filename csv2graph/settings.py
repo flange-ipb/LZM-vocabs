@@ -21,6 +21,9 @@ HEADER_MA = "MA"
 HEADER_PHD = "PHD\n"
 HEADER_DATA = "Data"
 
+#
+# Language -> Header associations
+#
 LANG_DE = "de"
 LANG_EN = "en"
 
@@ -39,6 +42,9 @@ LO_HEADER_LANGUAGE_ASSOCIATION = {
     LANG_EN: HEADER_LO_EN,
 }
 
+#
+# Header -> Competency association
+#
 HEADER_COMPETENCY_ASSOCIATION = {
     HEADER_SK_LEVEL: kompetenz.SK,
     HEADER_MK_LEVEL: kompetenz.MK,
@@ -46,6 +52,9 @@ HEADER_COMPETENCY_ASSOCIATION = {
     HEADER_SOK_LEVEL: kompetenz.SoK,
 }
 
+#
+# Field value -> Learning level associations inside the competency column
+#
 LEARNING_LEVELS_ASSOCIATION = {
     "1": lernniveaustufe.LNS1,
     "2": lernniveaustufe.LNS2,
@@ -55,6 +64,9 @@ LEARNING_LEVELS_ASSOCIATION = {
     "6": lernniveaustufe.LNS6,
 }
 
+#
+# Header -> Qualification level association
+#
 HEADER_QUALIFICATION_LEVELS_ASSOCIATION = {
     HEADER_BA: zielgruppe.BA,
     HEADER_MA: zielgruppe.MA,
