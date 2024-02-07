@@ -3,7 +3,7 @@ from typing import Dict
 from rdflib import Graph, URIRef, SKOS, RDF
 from rdflib.term import Node, Literal, BNode
 
-from csv2graph import topic
+from csv2graph import topic, cluster
 from csv2graph.namespace import fdmontology
 from csv2graph.settings import (
     PREFIX_LO,
@@ -15,6 +15,7 @@ from csv2graph.settings import (
     HEADER_TOPIC_ID_IN_CLUSTER,
     HEADER_CLUSTER_ID,
     TOPIC_HEADER_LANGUAGE_ASSOCIATION,
+    CLUSTER_HEADER_LANGUAGE_ASSOCIATION,
 )
 
 
@@ -57,11 +58,22 @@ def _add_qualification_levels(g: Graph, lo_node: Node, row: Dict):
             raise Exception(f"Wrong character in column {header}: '{has_level}'")
 
 
-def _add_topic(g: Graph, lo_node: Node, row: Dict):
+def _add_topic(g: Graph, lo_node: Node, row: Dict) -> Node:
     topic_labels = {lang: row[header] for lang, header in TOPIC_HEADER_LANGUAGE_ASSOCIATION.items()}
     topic_node = topic.add_topic(g, row[HEADER_CLUSTER_ID], row[HEADER_TOPIC_ID_IN_CLUSTER], topic_labels)
+
     g.add((lo_node, fdmontology.adressiertThema, topic_node))
     g.add((topic_node, fdmontology.umfasstLernziel, lo_node))
+
+    return topic_node
+
+
+def _add_cluster_to_topic(g: Graph, topic_node: Node, row: Dict):
+    cluster_labels = {lang: row[header] for lang, header in CLUSTER_HEADER_LANGUAGE_ASSOCIATION.items()}
+    cluster_node = cluster.add_cluster(g, row[HEADER_CLUSTER_ID], cluster_labels)
+
+    g.add((cluster_node, fdmontology.enthältThema, topic_node))
+    g.add((topic_node, fdmontology.gehörtZuThemenbereich, cluster_node))
 
 
 def add_learning_objective(g: Graph, row: Dict):
@@ -71,4 +83,6 @@ def add_learning_objective(g: Graph, row: Dict):
     _add_definitions(g, lo_node, row)
     _add_competency_levels(g, lo_node, row)
     _add_qualification_levels(g, lo_node, row)
-    _add_topic(g, lo_node, row)
+
+    topic_node = _add_topic(g, lo_node, row)
+    _add_cluster_to_topic(g, topic_node, row)

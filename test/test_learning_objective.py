@@ -8,6 +8,8 @@ def test_add_learning_objective():
     row = {
         s.HEADER_LO_ID: "12345",
         s.HEADER_CLUSTER_ID: "2",
+        s.HEADER_CLUSTER_DE: "Label des Themenclusters",
+        s.HEADER_CLUSTER_EN: "Label of the cluster",
         s.HEADER_TOPIC_ID_IN_CLUSTER: "5",
         s.HEADER_TOPIC_DE: "Label des Themas",
         s.HEADER_TOPIC_EN: "Label of the content aspect",
@@ -31,6 +33,7 @@ def test_add_learning_objective():
         @prefix o: <http://lzfdm.nfdi.de/ontologie/> .
         @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
         @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+        @prefix tc: <http://lzfdm.nfdi.de/vocab/themencluster#> .
         @prefix thema: <http://lzfdm.nfdi.de/vocab/thema#> .
         @prefix zg: <http://lzfdm.nfdi.de/vocab/qualifikationsstufe#> .
 
@@ -59,7 +62,12 @@ def test_add_learning_objective():
 
         thema:2-5 a o:Thema ;
             rdfs:label "Label des Themas"@de, "Label of the content aspect"@en ;
+            o:gehörtZuThemenbereich tc:2 ;
             o:umfasstLernziel lz:12345 .
+
+        tc:2 a o:Themenbereich ;
+            rdfs:label "Label des Themenclusters"@de, "Label of the cluster"@en ;
+            o:enthältThema thema:2-5 .
     """)
 
     assert same_graphs(g, expected)
