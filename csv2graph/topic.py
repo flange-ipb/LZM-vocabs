@@ -7,7 +7,7 @@ from csv2graph.namespace import fdmontology
 from csv2graph.settings import PREFIX_TOPIC
 
 
-def add_topic(g: Graph, cluster_id: str, topic_id: str, names_dict: Dict) -> Node | None:
+def add_topic(g: Graph, cluster_id: str, topic_id: str, names_dict: Dict) -> Node:
     if not cluster_id:
         raise Exception("Missing cluster id")
     if not topic_id:
