@@ -39,7 +39,8 @@ def _add_qualification_level_to_learning_objective(g: Graph, lo_node: Node, leve
 
 def _add_qualification_levels(g: Graph, lo_node: Node, row: Dict):
     for header, level in HEADER_QUALIFICATION_LEVELS_ASSOCIATION.items():
-        if has_level := row[header] == "X":
+        has_level = row[header]
+        if has_level == "X":
             _add_qualification_level_to_learning_objective(g, lo_node, level)
         elif not has_level:
             continue
