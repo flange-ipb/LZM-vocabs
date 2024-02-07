@@ -50,7 +50,7 @@ def test_add_content_to_topic_without_existing_topic():
         add_content_to_topic(g, ["Col0 is ignored", "Label des Themas", "Col2 is ignored", "Definition des Inhalts"])
 
 
-def test_add_content_to_topic_with_many_topic_with_same_label():
+def test_add_content_to_topic_with_many_topics_having_the_same_label():
     g = graph()
     add_topic(g, "1", "42", {"de": "Label des Themas", "en": "Label of the topic"})
     add_topic(g, "2", "42", {"de": "Label des Themas", "en": "Label of the topic"})
