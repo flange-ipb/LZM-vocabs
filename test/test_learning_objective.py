@@ -22,7 +22,7 @@ def test_add_learning_objective():
         s.HEADER_SOK_LEVEL: "1",
         s.HEADER_BA: "",
         s.HEADER_MA: "",
-        s.HEADER_PHD: "X",
+        s.HEADER_PHD: "x",
         s.HEADER_DATA: "X",
     }
     add_learning_objective(g, row)

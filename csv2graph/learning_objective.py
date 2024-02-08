@@ -50,7 +50,7 @@ def _add_qualification_level(g: Graph, lo_node: Node, level_node: Node):
 def _add_qualification_levels(g: Graph, lo_node: Node, row: Dict):
     for header, level in HEADER_TO_QUALIFICATION_LEVELS_ASSOCIATION.items():
         has_level = row[header]
-        if has_level == "X":
+        if has_level.upper() == "X":
             _add_qualification_level(g, lo_node, level)
         elif not has_level:
             continue
