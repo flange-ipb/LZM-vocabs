@@ -19,8 +19,9 @@ def _csv_matrix_to_graph(csv_matrix: str, g: Graph):
     with open(csv_matrix, newline="") as csvfile:
         reader = csv.DictReader(csvfile)
         for row_number, row in enumerate(reader):
+            trimmed_row = {k: v.strip() for k, v in row.items()}
             try:
-                add_learning_objective(g, row)
+                add_learning_objective(g, trimmed_row)
             except Exception as e:
                 print(f"Exception in row #{row_number + 2}: {str(e)}", file=sys.stderr)
 
