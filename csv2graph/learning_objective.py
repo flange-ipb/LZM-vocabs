@@ -18,10 +18,37 @@ from csv2graph.settings import (
     LANGUAGE_TO_CLUSTER_HEADER_ASSOCIATION,
 )
 
+_BEGINNING_OF_DEFINITION_TO_BE_REMOVED = (
+    "...",
+    "..",
+    ".",
+    "…",
+)
+
+
+def _clean_definition(definition: str) -> str:
+    for to_remove in _BEGINNING_OF_DEFINITION_TO_BE_REMOVED:
+        if definition.startswith(to_remove):
+            definition = definition.removeprefix(to_remove)
+    return definition.strip()
+
+
+_PREFIX_OF_DEFINITION = {
+    "de": "Lernende können ",
+    "en": "Learners are able to ",
+}
+
+
+def _add_prefix_to_definition(definition: str, lang: str) -> str:
+    return _PREFIX_OF_DEFINITION[lang] + definition
+
 
 def _add_definitions(g: Graph, lo_node: Node, row: Dict):
     for lang, header in LANGUAGE_TO_LO_HEADER_ASSOCIATION.items():
-        g.add((lo_node, SKOS.definition, Literal(row[header], lang=lang)))
+        definition = _clean_definition(row[header])
+        definition = _add_prefix_to_definition(definition, lang)
+
+        g.add((lo_node, SKOS.definition, Literal(definition, lang=lang)))
 
 
 def _add_competency_level(g: Graph, lo_node: Node, competency: Node, learning_level: Node):

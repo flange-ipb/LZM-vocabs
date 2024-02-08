@@ -14,8 +14,8 @@ def test_add_learning_objective():
         s.HEADER_TOPIC_ID_IN_CLUSTER: "5",
         s.HEADER_TOPIC_DE: "Label des Themas",
         s.HEADER_TOPIC_EN: "Label of the content aspect",
-        s.HEADER_LO_DE: "Definition in Deutsch",
-        s.HEADER_LO_EN: "Definition in English",
+        s.HEADER_LO_DE: "... einen RDF-Graphen mit Python bauen.",
+        s.HEADER_LO_EN: "…construct an RDF graph with Python.",
         s.HEADER_SK_LEVEL: "",
         s.HEADER_MK_LEVEL: "4",
         s.HEADER_SEK_LEVEL: "2",
@@ -56,7 +56,8 @@ def test_add_learning_objective():
             ] ;
             o:istAbgestimmtAufZielgruppe zg:Data, zg:PhD ;
             o:adressiertThema thema:2-5 ;
-            skos:definition "Definition in Deutsch"@de, "Definition in English"@en .
+            skos:definition "Lernende können einen RDF-Graphen mit Python bauen."@de,
+                "Learners are able to construct an RDF graph with Python."@en .
 
         zg:Data o:istZielgruppeVonLernziel lz:12345 .
         zg:PhD o:istZielgruppeVonLernziel lz:12345 .
