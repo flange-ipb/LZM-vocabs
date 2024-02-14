@@ -33,11 +33,11 @@ pytest
 ```
 
 ### Tabellen
-* Datei __LO-Matrix_Tischvorlage_cluster_1.xlsx - Matrix_de_en_gesamt.csv__: exportiere das Tabellenblatt *Matrix_de_en_gesamt* aus der Tischvorlage eines der Cluster als CSV
-* Datei __LO-Matrix_Tischvorlage_cluster_1.xlsx - Index.csv__: exportiere das Tabellenblatt *Index* aus der Tischvorlage eines der Cluster als CSV
+* Datei __LO-Matrix_Tischvorlage_gesamt.xlsx - Matrix_de_en_gesamt.csv__: exportiere das Tabellenblatt *Matrix_de_en_gesamt* aus der Tischvorlage als CSV
+* Datei __LO-Matrix_Tischvorlage_gesamt.xlsx - Index.csv__: exportiere das Tabellenblatt *Index* aus der Tischvorlage als CSV
 
 ### Die Transformation ausführen
 ```
-python -m csv2graph.csv2graph_main "LO-Matrix_Tischvorlage_cluster_1.xlsx - Matrix_de_en_gesamt.csv" "LO-Matrix_Tischvorlage_cluster_1.xlsx - Index.csv" output.ttl
+python -m csv2graph.csv2graph_main "LO-Matrix_Tischvorlage_gesamt.xlsx - Matrix_de_en_gesamt.csv" "LO-Matrix_Tischvorlage_gesamt.xlsx - Index.csv" output.ttl
 ```
 Der RDF-Graph wird in die Datei _output.ttl_ im Turtle-Format geschrieben.
